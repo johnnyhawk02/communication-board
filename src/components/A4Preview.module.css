@@ -1,0 +1,71 @@
+/* Container for the A4 preview, simpler now */
+.a4Container {
+  /* display: flex; */ /* No longer needed for centering */
+  /* justify-content: center; */ /* No longer needed */
+  /* padding: 20px; */ /* Moved padding to mainContent */
+  /* background-color: #f0f0f0; */ /* Remove background if desired */
+  /* flex-grow: 1; */ /* No longer needed */
+  /* overflow: auto; */ /* Handled by mainContent */
+  margin-bottom: 20px; /* Add some space below the preview */
+}
+
+/* Simulates the A4 paper */
+.a4Preview {
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  /* A4 Aspect Ratio */
+  width: 100%; /* Fill container width */
+  max-width: 2160px; /* Increased by 80% from 1200px (1200 * 1.8 = 2160) */
+  aspect-ratio: 210 / 297;
+  max-height: calc(100vh - 50px); /* Increased vertical space */
+
+  /* Add some padding inside the page */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Grid container inside the A4 preview */
+.gridContainer {
+  display: grid;
+  /* grid-template-columns: repeat(3, 80px); */ /* REMOVED - Set dynamically */
+  gap: 15px; /* Increased from 10px */
+  width: 85%; /* Reduced from 90% to create more border */
+  max-width: 85%; /* Add max-width to prevent overflow */
+  height: auto; /* Changed from 85% to auto to fit content */
+  min-height: 85%; /* Ensure it takes at least 85% of the parent height */
+  justify-content: center;
+  align-content: center; /* Changed back to center for better vertical balance */
+  margin: 0 auto; /* Center the grid */
+  padding: 15px; /* Increased padding inside the grid */
+  box-sizing: border-box; /* Include padding in dimensions */
+}
+
+.gridCell {
+  border: 1px dashed #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent content spillover */
+  /* Default size - can be overridden by inline styles */
+  /* 7:8 ratio (width:height) */
+  width: 110px; /* Reduced from 130px */
+  height: 126px; /* 110px * (8/7) ≈ 126px */
+}
+
+/* Ensure images within grid cells scale nicely */
+.gridCell img {
+  max-width: 85%; /* Leave a little space */
+  max-height: 85%; /* Leave a little space */
+  object-fit: contain;
+}
+
+.emptySlot {
+  background-color: #fafafa;
+  /* Size will be inherited from parent gridCell */
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box; /* Ensure padding/border included if added */
+} 

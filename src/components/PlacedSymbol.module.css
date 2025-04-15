@@ -1,0 +1,32 @@
+.placedSymbol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center content vertically */
+  width: 100%; /* Take full width of cell */
+  height: 100%; /* Take full height of cell */
+  text-align: center;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.symbolImage {
+  /* Keep constraints relative to this container */
+  max-width: 75%;
+  max-height: 65%; 
+  object-fit: contain;
+  margin-bottom: 5px;
+}
+
+.symbolName {
+  font-family: 'ABeeZee', sans-serif;
+  font-size: 0.9em;
+  color: #333;
+  /* Ensure text doesn't overflow */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 90%; /* Slightly less than 100% to avoid touching edges */
+  /* Add scaling for smaller cells */
+  min-height: 14px; /* Ensure there's always space for text */
+} 
