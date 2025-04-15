@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { SymbolData } from '../data/symbols';
 import html2canvas from 'html2canvas';
-import styles from './ExportButton.module.css';
 
 interface JpegExporterProps {
   placedSymbols: (SymbolData | null)[];
