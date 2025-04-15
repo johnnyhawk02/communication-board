@@ -63,17 +63,8 @@ interface PdfDocumentProps {
 }
 
 const PAGE_WIDTH_PT = 595.28; // A4 width
-const PAGE_PADDING_PT = 30;
-const AVAILABLE_WIDTH_PT = PAGE_WIDTH_PT - (PAGE_PADDING_PT * 2); // ~535pt
-const CELL_GAP_PT = 10; // Define the gap between cells in points
-
-// Calculate width in points, accounting for gaps
-const calculateCellWidth = (cols: number): number => {
-  if (cols <= 0) return 0;
-  const totalGapWidth = (cols - 1) * CELL_GAP_PT;
-  const widthPerCell = (AVAILABLE_WIDTH_PT - totalGapWidth) / cols;
-  return Math.max(widthPerCell, 0); // Ensure non-negative
-};
+const PAGE_PADDING_PT = 40; // Increased padding
+const AVAILABLE_WIDTH_PT = PAGE_WIDTH_PT - (PAGE_PADDING_PT * 2);
 
 const PdfDocument: React.FC<PdfDocumentProps> = ({ placedSymbols, rows, cols }) => {
   // FORCE 2 COLUMNS LAYOUT
@@ -85,9 +76,6 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ placedSymbols, rows, cols }) 
   const cellHeight = 130;
   const cellGap = 10;
   const rowGap = 30; // Increased row gap to make separation clearer
-  
-  // Total width including gaps
-  const totalWidth = forcedCols * cellWidth + (forcedCols - 1) * cellGap;
   
   // Calculate new row count based on forced 2-column layout
   const forcedRows = Math.ceil(placedSymbols.length / forcedCols);

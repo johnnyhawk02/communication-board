@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import SymbolLibrary from './components/SymbolLibrary';
 import A4Preview from './components/A4Preview';
 import ExportButton from './components/ExportButton';

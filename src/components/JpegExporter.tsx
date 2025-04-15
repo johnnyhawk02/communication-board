@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { SymbolData } from '../data/symbols';
 import html2canvas from 'html2canvas';
+import styles from './ExportButton.module.css';
 
 interface JpegExporterProps {
   placedSymbols: (SymbolData | null)[];
@@ -14,9 +15,7 @@ interface JpegExporterProps {
 const A4_WIDTH_PX = 794; // ~8.27in at 96 DPI
 const A4_HEIGHT_PX = 1123; // ~11.69in at 96 DPI
 
-// Match A4Preview styling
-const CELL_WIDTH_PX = 110;
-const CELL_HEIGHT_PX = 126;
+// Match A4Preview styling - Removed CELL_WIDTH_PX and CELL_HEIGHT_PX as they are calculated dynamically now
 const CELL_GAP_PX = 15; // Match the gap in A4Preview
 
 const JpegExporter: React.FC<JpegExporterProps> = ({ 
