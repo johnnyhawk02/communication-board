@@ -6,22 +6,27 @@ interface BoardState {
   placedSymbols: (SymbolData | null)[]; // Array representing the grid slots
   rows: number; // Add rows state
   cols: number; // Add cols state
+  fontSize: number; // Font size state (in em units)
   addSymbolToBoard: (symbol: SymbolData) => void;
   placeSymbolAt: (symbol: SymbolData, index: number) => void;
-  moveSymbol: (fromIndex: number, toIndex: number) => void; // New action for moving/swapping
-  setGridSize: (rows: number, cols: number) => void; // New action
-  loadSymbolsFromAssets: () => Promise<void>; // New action to load symbols
+  moveSymbol: (fromIndex: number, toIndex: number) => void; // Action for moving/swapping
+  removeSymbol: (index: number) => void; // Action to remove a symbol
+  setGridSize: (rows: number, cols: number) => void; // Action to change grid size
+  setFontSize: (fontSize: number) => void; // Action to change font size
+  loadSymbolsFromAssets: () => Promise<void>; // Action to load symbols
   // TODO: Add removeSymbolFromBoard if needed
 }
 
 const INITIAL_ROWS = 4;
 const INITIAL_COLS = 3;
+const INITIAL_FONT_SIZE = 0.9; // Default font size in em units
 
 export const useBoardStore = create<BoardState>((set, get) => ({
   // Initialize with fallback symbols for immediate rendering
   availableSymbols: fallbackSymbols,
   rows: INITIAL_ROWS,
   cols: INITIAL_COLS,
+  fontSize: INITIAL_FONT_SIZE,
   placedSymbols: Array(INITIAL_ROWS * INITIAL_COLS).fill(null),
 
   // Add a new symbol to the board
@@ -61,9 +66,21 @@ export const useBoardStore = create<BoardState>((set, get) => ({
     }
     const newPlacedSymbols = [...currentPlacedSymbols];
     const symbolToMove = newPlacedSymbols[fromIndex];
-    newPlacedSymbols[fromIndex] = newPlacedSymbols[toIndex]; // Put what was at toIndex into fromIndex
-    newPlacedSymbols[toIndex] = symbolToMove; // Put the moved symbol into toIndex
+    newPlacedSymbols[fromIndex] = newPlacedSymbols[toIndex];
+    newPlacedSymbols[toIndex] = symbolToMove;
     set({ placedSymbols: newPlacedSymbols });
+  },
+
+  // Remove a symbol from a specific index
+  removeSymbol: (index) => {
+    const currentPlacedSymbols = get().placedSymbols;
+    if (index >= 0 && index < currentPlacedSymbols.length) {
+      const newPlacedSymbols = [...currentPlacedSymbols];
+      newPlacedSymbols[index] = null; // Set the slot back to null
+      set({ placedSymbols: newPlacedSymbols });
+    } else {
+      console.warn(`Invalid index (${index}) for removing symbol.`);
+    }
   },
 
   // Set grid size
@@ -94,6 +111,11 @@ export const useBoardStore = create<BoardState>((set, get) => ({
       cols,
       placedSymbols: newPlacedSymbols // Set the new array with preserved symbols
     });
+  },
+
+  // Set font size for symbol labels
+  setFontSize: (fontSize) => {
+    set({ fontSize });
   },
 
   // Load symbols dynamically from assets

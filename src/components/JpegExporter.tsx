@@ -149,7 +149,7 @@ const JpegExporter: React.FC<JpegExporterProps> = ({
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap'
                   }}>
-                    {symbol.name}
+                    {symbol.name.replace(/\s*\d+$/, '')}
                   </div>
                 </>
               )}
